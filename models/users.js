@@ -38,7 +38,7 @@ exports.add = async (user) => {
 	try {
         
         //server validation rules 
-        //email is required        
+        //username is required        
         if(user.username === undefined){
             throw {message:'username is required', status:400};
         }

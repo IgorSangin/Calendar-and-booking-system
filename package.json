@@ -13,10 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "nodemon": "^1.19.3",
+    "nodemon": "^1.19.4",
     "promise-mysql": "^4.1.1"
   }
 }
