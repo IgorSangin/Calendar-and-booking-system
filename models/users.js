@@ -64,8 +64,19 @@ exports.add = async (user) => {
         }
 
         
+        let sql = `SELECT username from Users WHERE
+                    username = \'${user.username}\'`;
+        
         const connection = await mysql.createConnection(info.config);
         let data = await connection.query(sql);
+
+        //if the query return a record then this email has been used before
+        if(data.length){
+            //first close the connection as we are leaving this function
+            await connection.end();
+            //then throw an error to leave the function
+            throw {message:'username already in use', status:400};
+        }
 
 
         //hash the password using bcryptjs package
@@ -74,10 +85,8 @@ exports.add = async (user) => {
 
         //create a new object to hold users final data
         let userData = {
-            pwd: hash,
-            forename: user.forename,
-            surname: user.surname,
-            created: new Date()
+            username: user.username,
+            password: hash,
         }
         
         //this is the sql statement to execute
