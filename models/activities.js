@@ -95,3 +95,24 @@ exports.update = async (id, ctx) =>{
         ctx.throw(500, 'An Error has occured')
     }
 }
+
+exports.delete = async (id, ctx) =>{
+    try{
+
+        //connect to the database
+        const connection = await mysql.createConnection(info.config);
+
+        let totalID = await connection.query(`SELECT COUNT(*) as myValue FROM activity`);
+        let count = totalID[0].myValue;
+        if(id > count || id < 1){
+            return 'Please input a number between 1-' + count;
+        }else{
+            await connection.query(`DELETE FROM activity WHERE id="${id}"`)
+            return "Delete succesful"
+        }
+
+    }catch (error){
+        console.log(error);
+        ctx.throw(500, 'An Error has occured')
+    }
+}

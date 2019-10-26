@@ -59,4 +59,10 @@ router.put('/:id', bodyParser(), async (cnx, next) =>{
     }
 })
 
+router.del('/:id', bodyParser(), async (cnx,next) =>{
+
+    let id = cnx.params.id;
+    cnx.body = await activityModel.delete(id);
+})
+
 module.exports = router;
