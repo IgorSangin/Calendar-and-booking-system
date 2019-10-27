@@ -18,10 +18,7 @@
     "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
     "koa-cors": "0.0.16",
-<<<<<<< HEAD
-=======
     "koa-passport": "^4.1.3",
->>>>>>> homePage
     "koa-router": "^7.4.0",
     "nodemon": "^1.19.4",
     "passport-http": "^0.3.0",
