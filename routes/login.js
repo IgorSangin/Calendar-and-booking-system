@@ -31,6 +31,7 @@ router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
 router.post('/', bodyParser(), async (cnx, next) => {
     console.log(cnx.request.body)
+    console.log(cnx.headers.authorization)
     
     let currentUser = {
         username : cnx.request.body.values === undefined ? undefined: cnx.request.body.values.username, 

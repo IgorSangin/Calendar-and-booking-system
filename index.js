@@ -7,11 +7,13 @@ const passport = require('koa-passport');
 
 
 var admin = require('./routes/admin.js');
-var users = require('./routes/users.js')
+var users = require('./routes/users.js');
+var login = require('./routes/login.js');
 
 app.use(cors());
 app.use(admin.routes());
 app.use(users.routes());
+app.use(login.routes());
 
 //this import will run the code in the auth.js
 require('./auth');
