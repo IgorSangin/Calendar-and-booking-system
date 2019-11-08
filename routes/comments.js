@@ -1,33 +1,23 @@
 var Router = require('koa-router');
-var activityModel = require('../models/activities')
+var commentsModel = require('../models/comments')
 
 var router = Router({
-   prefix: '/api/calendar'
+   prefix: '/api/calendar/comments'
 }); 
 
 var bodyParser = require('koa-bodyparser');
 
 router.get('/', (cnx, next) => {
-    cnx.body = {message:'Testing page for Booking system'};
 });
 
 //create a new activity
 router.post('/',bodyParser(), async (cnx,next) =>{
-    //set variables for activity properties
-    title = cnx.request.body.title;
-    description = cnx.request.body.title;
-    location = cnx.request.body.location;
-    //valiation for activity properties
-    if(title > 60 || title <= 0){ //title should be between 1 and 60 characters
-        cnx.body = {message:"Please enter a valid title (1-60 characters)"}
-    }else if(description > 300 || description <= 0){ //description should be between 1 and 300 characters
-        cnx.body = {message:"Please enter a valid description (1-300 characters)"}
-    }else if(location > 40 || location <= 0){ //location should be between 1 and 40 characters
-        cnx.body = {message:"Please enter valid location (1-40 characters)"}
-    }else{ //only after passing the above parameters will this execute
-        let newActivity = {title:title, description:description, url:title +".activity", location:location};
-        cnx.body = await activityModel.add(newActivity);
+    try{
+        cnx.body = await commentsModel.add(cnx)
+    }catch{
+        cnx.body = {message:error.message};
     }
+    
 } )
 
 router.get('/:id([0-9]{1,})', async (cnx, next) =>{
