@@ -1,3 +1,4 @@
+'use strict'
 var Router = require('koa-router');
 var commentsModel = require('../models/comments')
 
@@ -7,14 +8,33 @@ var router = Router({
 
 var bodyParser = require('koa-bodyparser');
 
-router.get('/', (cnx, next) => {
+router.get('/', bodyParser(), async (cnx, next) => {
+    try{
+        let data = await commentsModel.get()
+        cnx.body = data
+        // return data
+    }catch(error){
+        cnx.body = {message:error.message}
+    }
 });
 
 //create a new activity
 router.post('/',bodyParser(), async (cnx,next) =>{
+    let userId = "Carl"
+    let activityId = "Carl"
+    let allText = cnx.request.body.values.comment
+    const d = new Date();
+    console.log(allText);
+    let dateCreated = d.getFullYear()+"-"+d.getMonth()+"-"
+        +d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+        +":"+d.getSeconds();
+        let newComment = {userId: userId, activityId: activityId, allText: allText, dateCreated: dateCreated}
     try{
-        cnx.body = await commentsModel.add(cnx)
-    }catch{
+        await commentsModel.add(newComment);
+        cnx.response.status = 201;
+        cnx.body = {message: "comment was added successfully"};
+    }catch(error){
+        cnx.response.status = error.status;
         cnx.body = {message:error.message};
     }
     
