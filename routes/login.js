@@ -43,10 +43,12 @@ router.post('/', bodyParser(), async (cnx, next) => {
     cnx.body = {message:"Logged in successfully"};
  }
  catch(error){
-    cnx.response.status = error.status;
-    cnx.body = {message:error.message};
- }
+   if(error.status)
+     cnx.response.status = error.status;
+   cnx.body = {message:error.message};
+}
 });
+
 
 
 module.exports = router;
