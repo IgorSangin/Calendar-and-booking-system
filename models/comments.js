@@ -42,3 +42,19 @@ exports.get = async (ctx) =>{
         ctx.throw(500, 'An Error has occured');
     }
 }
+
+exports.update = async (newComment, ctx) =>{
+    try{
+        const connection = await mysql.createConnection(info.config);
+
+        let sql = `UPDATE comments SET allText = "${newComment.allText}", dateModified = "${newComment.dateModified}" WHERE ID = "${newComment.Id}"`
+
+        await connection.query(sql);
+
+        await connection.end
+        console.log('Update successful')
+    }catch (error){
+        console.log(error);
+        ctx.throw(500, 'An Error has occured');
+    }
+}

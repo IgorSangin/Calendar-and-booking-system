@@ -2,7 +2,7 @@ var Router = require('koa-router');
 var activityModel = require('../models/activities')
 
 var router = Router({
-   prefix: '/api/calendar'
+   prefix: '/api/calendar/activties'
 }); 
 
 var bodyParser = require('koa-bodyparser');
@@ -15,7 +15,7 @@ router.get('/', (cnx, next) => {
 router.post('/',bodyParser(), async (cnx,next) =>{
     //set variables for activity properties
     title = cnx.request.body.title;
-    description = cnx.request.body.title;
+    description = cnx.request.body.description;
     location = cnx.request.body.location;
     //valiation for activity properties
     if(title > 60 || title <= 0){ //title should be between 1 and 60 characters
@@ -38,7 +38,7 @@ router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 })
 
 router.put('/:id', bodyParser(), async (cnx, next) =>{
-
+    console.log("hey I'm from the activities route!")
     let id = cnx.params.id;
     title = cnx.request.body.title;
     description = cnx.request.body.description;

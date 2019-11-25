@@ -50,7 +50,7 @@ exports.update = async (id, ctx) =>{
         const connection = await mysql.createConnection(info.config);
 
         title = ctx.request.body.title;
-        console.log(title)
+        console.log("Hello I am from activities model")
         description = ctx.request.body.description;
         url = ctx.request.body.title + ".activity";
         location = ctx.request.body.location;

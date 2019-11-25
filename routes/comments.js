@@ -18,12 +18,13 @@ router.get('/', bodyParser(), async (cnx, next) => {
     }
 });
 
-//create a new activity
+//create a new comment
 router.post('/',bodyParser(), async (cnx,next) =>{
     let userId = "Carl"
     let activityId = "Carl"
     let allText = cnx.request.body.values.comment
     const d = new Date();
+    console.log("I am post comment route")
     console.log(allText);
     let dateCreated = d.getFullYear()+"-"+d.getMonth()+"-"
         +d.getDate()+" "+d.getHours()+":"+d.getMinutes()
@@ -40,38 +41,39 @@ router.post('/',bodyParser(), async (cnx,next) =>{
     
 } )
 
-router.get('/:id([0-9]{1,})', async (cnx, next) =>{
+// router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
-    let id = cnx.params.id; //get tthe target id from the url
-    cnx.body = await activityModel.getById(id);
+//     let id = cnx.params.id; //get tthe target id from the url
+//     cnx.body = await activityModel.getById(id);
 
-})
+// })
 
-router.put('/:id', bodyParser(), async (cnx, next) =>{
-
-    let id = cnx.params.id;
-    title = cnx.request.body.title;
-    description = cnx.request.body.description;
-    location = cnx.request.body.location;
-    //valiation for activity properties
-    // if(title > 60 || title <= 0){ //title should be between 1 and 60 characters
-    //     cnx.body = {message:"Please enter a valid title"}
-    // }else if(description > 300 || description <= 0){ //description should be between 1 and 300 characters
-    //     cnx.body = {message:"Please enter a valid description"}
-    // }else if(location > 40 || location <= 0){ //location should be between 1 and 40 characters
-    //     cnx.body = {message:"Please enter valid input"}
-    if( (title > 60 || title <= 0) && (description > 300 || description <= 0) && (location > 40 || location <= 0)){
-        cnx.body = {message: "Please update at least one field"}
-    }else{ //only after passing the above parameters will this execute
-        //let updateActivity = {title:title, description:description, url:title + ".activity", location:location};
-        cnx.body = await activityModel.update(id,cnx);
+router.put('/:id',bodyParser(), async (cnx, next) =>{
+    let Id = cnx.params.id
+    let userId = "Carl"
+    let activityId = "Carl"
+    let allText = cnx.request.body.values.newComment
+    const d = new Date();
+    console.log(Id)
+    console.log(allText)
+    let dateModified = d.getFullYear()+"-"+d.getMonth()+"-"
+        +d.getDate()+" "+d.getHours()+":"+d.getMinutes()
+        +":"+d.getSeconds();
+        let newComment = {Id: Id, userId: userId, activityId: activityId, allText: allText, dateModified: dateModified}
+    try{
+        await commentsModel.update(newComment);
+        cnx.response.status = 201;
+        cnx.body = {message: "comment was updated successfully"};
+    }catch(error){
+        cnx.response.status = error.status;
+        cnx.body = {message:error.message};
     }
 })
 
-router.del('/:id', bodyParser(), async (cnx,next) =>{
+// router.del('/:id', bodyParser(), async (cnx,next) =>{
 
-    let id = cnx.params.id;
-    cnx.body = await activityModel.delete(id);
-})
+//     let id = cnx.params.id;
+//     cnx.body = await activityModel.delete(id);
+// })
 
 module.exports = router;
