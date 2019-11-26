@@ -1,11 +1,12 @@
 var Router = require('koa-router')
 var model = require('../models/users');
 var bodyParser = require('koa-bodyparser');
+var passport = require('koa-passport');
 var router = new Router({
     prefix: '/api/login'
 })
 
-router.get('/:id([0-9]{1,})', async (cnx, next) =>{
+router.post('/', bodyParser(), async (cnx, next) =>{
 
     //to protect the resource, only authenticated users can access it
     return passport.authenticate('basic', async function(err, user, info, status) {
@@ -16,8 +17,8 @@ router.get('/:id([0-9]{1,})', async (cnx, next) =>{
         cnx.body = { success: false }
         cnx.throw(401)
        } else {
-          let id = cnx.params.id;
-          let data = await model.getById(id);
+          let authData = cnx.params.authData;
+          let data = await model.findOne(authData);
  
           if(data.length === 0){
              cnx.response.status = 404;
@@ -28,26 +29,6 @@ router.get('/:id([0-9]{1,})', async (cnx, next) =>{
           }
     })(cnx)
  });
-
-router.post('/', bodyParser(), async (cnx, next) => {
-    console.log(cnx.request.body)
-    console.log(cnx.headers.authorization)
-    
-    let currentUser = {
-        username : cnx.request.body.values === undefined ? undefined: cnx.request.body.values.username, 
-        password : cnx.request.body.values === undefined ? undefined: cnx.request.body.values.password,
-    };
-   try{
-    await model.findOne(currentUser);
-    cnx.response.status = 201;
-    cnx.body = {message:"Logged in successfully"};
- }
- catch(error){
-   if(error.status)
-     cnx.response.status = error.status;
-   cnx.body = {message:error.message};
-}
-});
 
 
 

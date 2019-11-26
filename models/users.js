@@ -53,7 +53,7 @@ exports.findOne = async (authData, callback) => {
         
         if(data.length > 0){
             //check if the hashed passwords match
-            let pass = bcrypt.compareSync(authData.password, data[0].pwd);
+            let pass = bcrypt.compareSync(authData.password, data[0].password);
             
             if(pass)
                 //if yes callback with the user data
