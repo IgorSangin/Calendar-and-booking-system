@@ -15,17 +15,11 @@ router.post('/', bodyParser(), async (cnx, next) =>{
        }
        else if (user === false) {
         cnx.body = { success: false }
+        console.log("Incorrect")
         cnx.throw(401)
        } else {
-          let authData = cnx.params.authData;
-          let data = await model.findOne(authData);
- 
-          if(data.length === 0){
-             cnx.response.status = 404;
-             cnx.body = {message:"user not found"}
-          }
-          else
-             cnx.body = data;
+             cnx.body = user;
+             console.log(user)
           }
     })(cnx)
  });
