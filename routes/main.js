@@ -2,11 +2,7 @@ var Router = require('koa-router');
 var activityModel = require('../models/activities')
 
 var router = Router({
-<<<<<<< HEAD
-   prefix: '/api/calendar/activties'
-=======
    prefix: '/api/calendar/activities'
->>>>>>> login
 }); 
 
 var bodyParser = require('koa-bodyparser');
