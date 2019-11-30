@@ -63,7 +63,7 @@ exports.findOne = async (authData, callback) => {
                 callback(null, false); 
         }
         else{
-            //no such email was found
+            //no such username was found
             callback(null, false);
         }
     } catch (error) {
@@ -111,7 +111,7 @@ exports.add = async (user) => {
         const connection = await mysql.createConnection(info.config);
         let data = await connection.query(sql);
 
-        //if the query return a record then this email has been used before
+        //if the query return a record then this username has been used before
         if(data.length){
             //first close the connection as we are leaving this function
             await connection.end();
