@@ -7,9 +7,15 @@ var router = Router({
 
 var bodyParser = require('koa-bodyparser');
 
-router.get('/', (cnx, next) => {
-    cnx.body = {message:'Testing page for Booking system'};
-});
+router.get('/', async (cnx, next) => {
+    let data = cnx.body = await activityModel.getAll();
+    if (data === null) {
+        cnx.body.response.status = 404;
+        cnx.body = {message: "No existing activities were found!"}
+    } else {
+        cnx.body = data;
+    }
+  })
 
 //create a new activity
 router.post('/',bodyParser(), async (cnx,next) =>{

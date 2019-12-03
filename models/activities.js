@@ -25,6 +25,25 @@ exports.add = async (activity , ctx) =>{
     }
 }
 
+exports.getAll = async (ctx)=> {
+	try {
+
+        const connection = await mysql.createConnection(info.config);
+
+        //this is the sql statement to execute
+		let sql = `SELECT * FROM activity`;
+        let data = await connection.query(sql);
+		
+		await connection.end();
+
+        return data;
+
+    } catch (error) {
+        console.log(error)
+        ctx.throw(500, 'An error has occurred')
+    }
+}
+
 exports.getById = async (id, ctx) => {
     try{
 
