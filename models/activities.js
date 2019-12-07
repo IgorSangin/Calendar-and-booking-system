@@ -25,6 +25,7 @@ exports.add = async (activity , ctx) =>{
     }
 }
 
+//get all activities
 exports.getAll = async (ctx)=> {
 	try {
 

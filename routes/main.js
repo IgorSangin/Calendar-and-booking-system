@@ -7,6 +7,7 @@ var router = Router({
 
 var bodyParser = require('koa-bodyparser');
 
+//get all activities
 router.get('/', async (cnx, next) => {
     let data = cnx.body = await activityModel.getAll();
     if (data === null) {

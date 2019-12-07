@@ -7,7 +7,7 @@ var bcrypt = require('bcryptjs');
 var info = require('../config');
 
 
-//get an article by its id
+//get an activity by its id
 exports.getById = async (id) => {
 	try {
 
@@ -34,7 +34,7 @@ exports.getById = async (id) => {
 }
 
 
-//this method is to verify a user does exist in db with such email and pwd
+//this method is to verify a user does exist in db with such username and password
 exports.findOne = async (authData, callback) => {
 
     try {
@@ -74,33 +74,33 @@ exports.findOne = async (authData, callback) => {
     }
 }
 
-
+//method to add a user to the database
 exports.add = async (user) => {
 	try {
         
         //server validation rules 
         //username is required        
         if(user.username === undefined){
-            throw {message:'username is required', status:400};
+            throw {message:'Username is required', status:400};
         }
         //paswword is required
         if(user.password === undefined){
-            throw {message:'password is required', status:400};
+            throw {message:'Password is required', status:400};
         }
         else{
             //if password is provided it must be ay least 6 characters long
             if(user.password.length < 6){
-                throw {message:'password must be more than 6 characters long', status:400};
+                throw {message:'Password must be more than 6 characters long', status:400};
             }
         }
         //passwordConfrimation is required
         if(user.passwordConfirmation === undefined){
-            throw {message:'password confirmation is required', status:400};
+            throw {message:'Password confirmation is required', status:400};
         }
         else{
             //if passwordConfirmation is provided then it must match password
             if(user.password !== user.passwordConfirmation ){
-                throw {message:'passwords don\'t match', status:400};
+                throw {message:'Passwords don\'t match', status:400};
             }
         }
 
@@ -116,7 +116,7 @@ exports.add = async (user) => {
             //first close the connection as we are leaving this function
             await connection.end();
             //then throw an error to leave the function
-            throw {message:'username already in use', status:400};
+            throw {message:'Username already in use', status:400};
         }
 
 

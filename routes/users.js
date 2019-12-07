@@ -58,14 +58,6 @@ router.post('/', bodyParser(), async (cnx, next) =>{
    
 
 });
-router.put('/:id([0-9]{1,})', async (cnx, next) =>{
-   //TODO: edit a user
-   
-});
-router.del('/:id([0-9]{1,})', async (cnx, next) =>{
-   //TODO: delete a user
-   
-});
 
 
 module.exports = router;
