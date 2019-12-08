@@ -7,7 +7,7 @@ var bcrypt = require('bcryptjs');
 var info = require('../config');
 
 
-//get an activity by its id
+//get a user by its id
 exports.getById = async (id) => {
 	try {
 

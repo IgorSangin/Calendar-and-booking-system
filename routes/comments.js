@@ -41,12 +41,13 @@ router.post('/',bodyParser(), async (cnx,next) =>{
     
 } )
 
-// router.get('/:id([0-9]{1,})', async (cnx, next) =>{
+// get a comment by id
+router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
-//     let id = cnx.params.id; //get tthe target id from the url
-//     cnx.body = await activityModel.getById(id);
+    let id = cnx.params.id; //get tthe target id from the url
+    cnx.body = await commentsModel.getById(id);
 
-// })
+})
 
 router.put('/:id',bodyParser(), async (cnx, next) =>{
     let Id = cnx.params.id

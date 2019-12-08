@@ -43,6 +43,25 @@ exports.get = async (ctx) =>{
     }
 }
 
+//get a comment by id
+exports.getById = async (id, ctx) => {
+    try{
+
+        const connection = await mysql.createConnection(info.config);
+
+        let sql = `SELECT * FROM comments WHERE id = ${id}`;
+        
+        let data = await connection.query(sql);
+
+        await connection.end();
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        ctx.throw(500, 'An Error has occured');
+    }   
+}
+
 exports.update = async (newComment, ctx) =>{
     try{
         const connection = await mysql.createConnection(info.config);
