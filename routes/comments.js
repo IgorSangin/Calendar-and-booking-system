@@ -1,10 +1,6 @@
-'use strict'
-var Router = require('koa-router');
-var commentsModel = require('../models/comments')
 
-var router = Router({
-   prefix: '/api/calendar/comments'
-}); 
+const Router = require('koa-router');
+const commentsModel = require('../models/comments');
 
 var bodyParser = require('koa-bodyparser');
 
@@ -45,12 +41,45 @@ router.post('/',bodyParser(), async (cnx,next) =>{
     
 } )
 
-// router.get('/:id([0-9]{1,})', async (cnx, next) =>{
+router.get('/', bodyParser(), async (cnx, next) => {
+  try {
+    const data = await commentsModel.get();
+    cnx.body = data;
+    // return data
+  } catch (error) {
+    cnx.body = { message: error.message };
+  }
+});
 
-//     let id = cnx.params.id; //get tthe target id from the url
-//     cnx.body = await activityModel.getById(id);
+// create a new comment
+router.post('/', bodyParser(), async (cnx, next) => {
+  const userId = 'Carl';
+  const activityId = 'Carl';
+  const allText = cnx.request.body.values.comment;
+  const d = new Date();
+  console.log('I am post comment route');
+  console.log(allText);
+  const dateCreated = `${d.getFullYear()}-${d.getMonth()}-${
+    d.getDate()} ${d.getHours()}:${d.getMinutes()
+  }:${d.getSeconds()}`;
+  const newComment = {
+    userId, activityId, allText, dateCreated,
+  };
+  try {
+    await commentsModel.add(newComment);
+    cnx.response.status = 201;
+    cnx.body = { message: 'comment was added successfully' };
+  } catch (error) {
+    cnx.response.status = error.status;
+    cnx.body = { message: error.message };
+  }
+});
 
-// })
+// get a comment by id
+router.get('/:id([0-9]{1,})', async (cnx, next) => {
+  const { id } = cnx.params; // get tthe target id from the url
+  cnx.body = await commentsModel.getById(id);
+});
 
 router.put('/:id',bodyParser(), async (cnx, next) =>{
     //gets the id from the URL in the fetch request

@@ -1,20 +1,20 @@
 
-var mysql = require('promise-mysql');
-var info = require('../config');
+const mysql = require('promise-mysql');
+const info = require('../config');
 
-exports.createTables = async ()=> {
-    try {
-        const connection = await mysql.createConnection(info.config);
+exports.createTables = async () => {
+  try {
+    const connection = await mysql.createConnection(info.config);
 
-        let sql = `CREATE TABLE users (
+    let sql = `CREATE TABLE users (
             ID INT NOT NULL AUTO_INCREMENT,
             username VARCHAR(32),
             password VARCHAR(256),
             PRIMARY KEY (ID)
                 )`;
-        await connection.query(sql);
+    await connection.query(sql);
 
-        sql = `CREATE TABLE activity (
+    sql = `CREATE TABLE activity (
             ID INT NOT NULL AUTO_INCREMENT,
             title VARCHAR(60),
             description VARCHAR(300),
@@ -23,9 +23,9 @@ exports.createTables = async ()=> {
             PRIMARY KEY (ID)
             )`;
 
-        await connection.query(sql);
+    await connection.query(sql);
 
-        sql = `CREATE TABLE calendar (
+    sql = `CREATE TABLE calendar (
             ID INT NOT NULL AUTO_INCREMENT,
             timeFrom DATETIME,
             timeTo DATETIME,
@@ -35,10 +35,10 @@ exports.createTables = async ()=> {
             PRIMARY KEY (ID)
         )`;
 
-        await connection.query(sql);
+    await connection.query(sql);
 
 
-        sql = `CREATE TABLE taggedUsers (
+    sql = `CREATE TABLE taggedUsers (
             ID INT NOT NULL AUTO_INCREMENT,
             taggedUserId INT,
             taggedByUserId INT,
@@ -47,9 +47,9 @@ exports.createTables = async ()=> {
             PRIMARY KEY (ID)
         )`;
 
-        await connection.query(sql);
+    await connection.query(sql);
 
-        sql = `CREATE TABLE comments (
+    sql = `CREATE TABLE comments (
             ID INT NOT NULL AUTO_INCREMENT,
             userId VARCHAR(10),
             activityId VARCHAR(10),
@@ -59,13 +59,11 @@ exports.createTables = async ()=> {
             PRIMARY KEY (ID)
         )`;
 
-        await connection.query(sql);
-        
-        return {message:"created successfully"};
+    await connection.query(sql);
 
-    } catch (error) {
-        console.log(error);
-        ctx.throw(500, 'An Error has occured');
-    }
-
-}
+    return { message: 'created successfully' };
+  } catch (error) {
+    console.log(error);
+    ctx.throw(500, 'An Error has occured');
+  }
+};
