@@ -45,7 +45,6 @@ router.get('/:id([0-9]{1,})', async (cnx, next) => {
 });
 
 router.put('/:id', bodyParser(), async (cnx, next) => {
-  console.log("hey I'm from the activities route!");
   const { id } = cnx.params;
   title = cnx.request.body.title;
   description = cnx.request.body.description;

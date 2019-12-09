@@ -4,6 +4,10 @@ const commentsModel = require('../models/comments');
 
 var bodyParser = require('koa-bodyparser');
 
+const router = new Router({
+  prefix: '/api/calendar/comments',
+});
+
 router.get('/', bodyParser(), async (cnx, next) => {
     try{
         //calls the model for the exports.get method
@@ -18,7 +22,7 @@ router.get('/', bodyParser(), async (cnx, next) => {
 
 //create a new comment
 router.post('/',bodyParser(), async (cnx,next) =>{
-    let userId = "Carl"
+    let userId = "Igor"
     let activityId = "Carl"
     //gets the comment from the comment box in the frontend
     let allText = cnx.request.body.values.comment
@@ -77,7 +81,7 @@ router.post('/', bodyParser(), async (cnx, next) => {
 
 // get a comment by id
 router.get('/:id([0-9]{1,})', async (cnx, next) => {
-  const { id } = cnx.params; // get tthe target id from the url
+  const { id } = cnx.params; // get the target id from the url
   cnx.body = await commentsModel.getById(id);
 });
 

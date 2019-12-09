@@ -9,6 +9,8 @@ exports.add = async (comment,ctx ) =>{
              //sql statement to execute
             let sql = `INSERT INTO comments SET ?`;
 
+            await connection.query(sql,comment);
+
     // wait until the connection is closed
     await connection.end();
 
@@ -24,14 +26,14 @@ exports.get = async (ctx) => {
   try {
     const connection = await mysql.createConnection(info.config);
 
+    //gets all the comments from the comments table
     const sql = 'SELECT * FROM comments';
 
     const data = await connection.query(sql);
 
     await connection.end();
 
-        //gets all the comments from the comments table
-        let sql = `SELECT * FROM comments`
+    return data;
   }catch (error) {
     console.log(error);
     ctx.throw(500, 'An Error has occured');
@@ -48,8 +50,7 @@ exports.getById = async (id, ctx) => {
 
     await connection.end();
 
-        //updates the comment and changes the modified date where the id = newComment.Id
-        let sql = `UPDATE comments SET allText = "${newComment.allText}", dateModified = "${newComment.dateModified}" WHERE ID = "${newComment.Id}"`
+        
     return data;
   } catch (error) {
     console.log(error);
@@ -61,7 +62,8 @@ exports.update = async (newComment, ctx) => {
   try {
     const connection = await mysql.createConnection(info.config);
 
-    const sql = `UPDATE comments SET allText = "${newComment.allText}", dateModified = "${newComment.dateModified}" WHERE ID = "${newComment.Id}"`;
+    //updates the comment and changes the modified date where the id = newComment.Id
+    let sql = `UPDATE comments SET allText = "${newComment.allText}", dateModified = "${newComment.dateModified}" WHERE ID = "${newComment.Id}"`
 
     await connection.query(sql);
 
