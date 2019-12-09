@@ -4,7 +4,6 @@ var info = require('../config');
 //create an activity
 exports.add = async (comment,ctx ) =>{
     try{
-
         //connect to database
         const connection = await mysql.createConnection(info.config);
              //sql statement to execute
@@ -30,6 +29,7 @@ exports.get = async (ctx) =>{
 
         const connection = await mysql.createConnection(info.config);
 
+        //gets all the comments from the comments table
         let sql = `SELECT * FROM comments`
 
         let data = await connection.query(sql);
@@ -47,6 +47,7 @@ exports.update = async (newComment, ctx) =>{
     try{
         const connection = await mysql.createConnection(info.config);
 
+        //updates the comment and changes the modified date where the id = newComment.Id
         let sql = `UPDATE comments SET allText = "${newComment.allText}", dateModified = "${newComment.dateModified}" WHERE ID = "${newComment.Id}"`
 
         await connection.query(sql);
