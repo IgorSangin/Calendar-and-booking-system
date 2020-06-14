@@ -1,6 +1,6 @@
 # Calendar-and-booking-system-backend
 Third year project for Coventry University. Authors: Igor Sangin and Carl Egonu.  
-Repository moved from Coventry GitHub account.  
+Repository moved from Coventry University GitHub account.  
 Written in JavaScript in Node.js environment with Koa.js framework.
 Basic auth and Passport.js used for authentication.  
   
